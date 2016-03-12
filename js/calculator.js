@@ -4,7 +4,7 @@ function calculatorModule () {
   var error = new Error('Needs a number!');
 
   // Loads total's initial value to value that is passed in
-  function setTotal(num){
+  function load(num){
     if(typeof(num)==='number'){
     _total = num;
     return _total;
@@ -81,7 +81,7 @@ function calculatorModule () {
   }
 
   return {
-    load : setTotal,
+    load : load,
     getTotal: getTotal,
     add: add,
     subtract : subtract,
