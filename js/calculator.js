@@ -19,10 +19,10 @@ function calculatorModule () {
     return _total;
   }
 
-  // Adds the passed in number to the current total
-  function add(num){
-    if(typeof(num)==='number'){
-    _total += num;
+  // Adds the passed in number to the current value in memory
+  function add(a, b){
+    if(typeof(a)==='number' && typeof(b)==='number'){
+    _total = a + b;
     return _total;
     }
     else{
@@ -31,9 +31,9 @@ function calculatorModule () {
   }
 
   // Subtracts passed in number from total
-  function subtract(num){
-    if(typeof(num)==='number'){
-    _total -= num;
+  function subtract(a, b){
+    if(typeof(a)==='number' && typeof(b)==='number'){
+    _total = a - b;
     return _total;
     }
     else{
@@ -42,9 +42,9 @@ function calculatorModule () {
   }
 
   // Multiplies passed in number by total
-  function multiply(num){
-    if(typeof(num)==='number'){
-    _total *= num;
+  function multiply(a, b){
+    if(typeof(a)==='number' && typeof(b)==='number'){
+    _total = a * b;
     return _total;
     }
     else{
@@ -53,9 +53,9 @@ function calculatorModule () {
   }
 
   // Divides total by number passed in
-  function divides(num){
-    if(typeof(num)==='number'){
-    _total /= num;
+  function divides(a, b){
+    if(typeof(a)==='number' && typeof(b)==='number'){
+    _total = a / b;
     return _total;
     }
     else{
