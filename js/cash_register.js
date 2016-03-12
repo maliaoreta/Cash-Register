@@ -37,8 +37,6 @@ function displayValue () {
     }  
   }
 
-  // Check if there is already a math operation in the display
-  
   calcDisplay.innerHTML += this.id;
   exp = calcDisplay.innerHTML;
 }
@@ -48,38 +46,40 @@ function displayValue () {
 equals.addEventListener('click', eval);
 
 function eval () {
-  exp = exp.split(' ');
+  var expArr = exp.split(' ');
 
   var mathOps = ['+', '-', 'x', '/'];
   var a = 0;
   var b = 0;
 
-  for (var i = 0; i < mathOps.length; i++){
-    for (var k = 0; k < exp.length; k++){
-      if (exp.includes(mathOps[i])){
-        mathOp = mathOps[i];
-         a = Number(exp[exp.indexOf(mathOp)-1]);
-         b = Number(exp[exp.indexOf(mathOp)+1]); 
+  for (var j = 0; j < mathOps.length; j++){
+    for (var k = 0; k < expArr.length; k++){
+      if (expArr.includes(mathOps[j])){
+        mathOp = mathOps[j];
+         a = Number(expArr[expArr.indexOf(mathOp)-1]);
+         b = Number(expArr[expArr.indexOf(mathOp)+1]); 
       }
     }
   }
 
   switch (mathOp) {
     case '+': 
-      sum = calcDisplay.innerHTML = Calculator.add(a, b);
-      saveMem(sum);
+      calcDisplay.innerHTML = Calculator.add(a, b);
+      sum = calcDisplay.innerHTML;
+      saveMem();
       break;
     case '-':
-      difference = calcDisplay.innerHTML = Calculator.subtract(a, b);
-      saveMem(difference);
+      calcDisplay.innerHTML = Calculator.subtract(a, b);
+      difference = calcDisplay.innerHTML;
+      saveMem();
       break;
     case '/':
       quotient = calcDisplay.innerHTML = Calculator.divide(a, b);
-      saveMem(quotient);
+      saveMem();
       break;
     case 'x':
       product = calcDisplay.innerHTML = Calculator.multiply(a, b);
-      saveMem(product);
+      saveMem();
       break;
   }
 }
@@ -93,6 +93,6 @@ function clearDisplay () {
   Calculator.clearMemory();
 }
 
-function saveMem (num) {
+function saveMem () {
   Calculator.saveMemory();
 }
