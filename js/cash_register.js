@@ -1,4 +1,5 @@
 var Calculator = calculatorModule();
+
 var calcDisplay = document.getElementById('calcDisplay');
 var clear = document.getElementById('Clear');
 var equals = document.getElementById('=');
@@ -15,7 +16,7 @@ var a = 0;
 var b = 0;
 var allowEntry = true;
 var tempTotal = 0;
-var negativeWithdrawal = 'Can\'t withdraw a negative amount!';
+var negativeWithdrawal = 'Insufficient Funds!';
 var negativeDeposit = 'Can\'t deposit a negative amount!'
 
 // Attach click event listener and displayValue func for all buttons that need their value displayed
@@ -26,13 +27,10 @@ var btnsToDisplay = document.getElementsByClassName('buttons');
 // Updates the display to show clicked values
 function displayValue () {
 
-  for (var i = 0; i <= 9; i++){
-      
-    // Check if user is adding num to previous value stored in memory, if not clear display
-    if(calcDisplay.innerHTML == Calculator.getTotal() && event.target.id == i){
-      calcDisplay.innerHTML = null;
-    }  
-  }
+  // Check if user is modifying previously displayed num that was stored in total
+  if(calcDisplay.innerHTML === Number(Calculator.getTotal())){
+    calcDisplay.innerHTML = null;
+  } 
 
   // Check if there are multiple math operations
   for (var x = 0; x < mathOps.length; x++){
@@ -48,9 +46,9 @@ function displayValue () {
     calcDisplay.innerHTML = null;
     return;
   }
-
     calcDisplay.innerHTML += event.target.id;
     exp = calcDisplay.innerHTML;  
+
 }
 
 
@@ -80,6 +78,9 @@ function eval () {
       difference = calcDisplay.innerHTML;
       break;
     case '/':
+      if (b === 0){
+        return calcDisplay.innerHTML = 'Undefined!';
+      }
       calcDisplay.innerHTML = Calculator.divide(a, b);
       quotient = calcDisplay.innerHTML;
       break;
@@ -93,7 +94,6 @@ function eval () {
 // Withdraw Cash
 withdrawCash.addEventListener('click', withdraw);
 function withdraw () {
-
   tempTotal = Number(calcDisplay.innerHTML);
     if (Calculator.getTotal()) {
       var calcTotal = Calculator.getTotal();
@@ -103,6 +103,9 @@ function withdraw () {
     // Ensures positive funds
     if (calcTotal < 0){
       return calcDisplay.innerHTML = negativeWithdrawal;
+    }
+    else if (calcTotal === undefined){
+      return;
     }
   Calculator.load(calcTotal);
   calcDisplay.innerHTML = null; 
@@ -121,8 +124,13 @@ function deposit () {
     if (tempTotal < 0){
       return calcDisplay.innerHTML = 'Can\'t deposit a negative amount!';
     }
-  Calculator.load(tempTotal);
-  calcDisplay.innerHTML = null;
+    if (typeof tempTotal === 'number'){
+      Calculator.load(tempTotal);
+      calcDisplay.innerHTML = null;
+    }
+    else {
+      return calcDisplay.innerHTML = "Please enter a number!";
+    }
 }  
 
 
