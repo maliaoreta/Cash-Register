@@ -2,10 +2,6 @@ var Calculator = calculatorModule();
 var calcDisplay = document.getElementById('calcDisplay');
 var clear = document.getElementById('Clear');
 var equals = document.getElementById('=');
-var plus = document.getElementById(' + ');
-var subtract = document.getElementById(' - ');
-var divide = document.getElementById(' / ');
-var multiply = document.getElementById(' x ');
 var getBalance = document.getElementById('Get Balance');
 var depositCash = document.getElementById('Deposit Cash');
 var withdrawCash = document.getElementById('Withdraw Cash');
@@ -22,22 +18,9 @@ var tempTotal = 0;
 var negativeWithdrawal = 'Can\'t withdraw a negative amount!';
 var negativeDeposit = 'Can\'t deposit a negative amount!'
 
-
-// Display shows number value being clicked for numbers 0-9
-for (var i = 0; i <= 9; i++){
-  var numBtn = document.getElementById(i);
-  numBtn.addEventListener('click', displayValue);
-}
-// Display special case 00
-var doubleZero = document.getElementById('00');
-  doubleZero.addEventListener('click', displayValue);
-
-
-// // Add math operations to the display
-plus.addEventListener('click', displayValue);
-divide.addEventListener('click', displayValue);
-multiply.addEventListener('click', displayValue);
-subtract.addEventListener('click', displayValue);
+// Attach click event listener and displayValue func for all buttons that need their value displayed
+var btnsToDisplay = document.getElementsByClassName('buttons');
+  btnsToDisplay[0].addEventListener('click', displayValue);
 
 
 // Updates the display to show clicked values
@@ -46,7 +29,7 @@ function displayValue () {
   for (var i = 0; i <= 9; i++){
       
     // Check if user is adding num to previous value stored in memory, if not clear display
-    if(calcDisplay.innerHTML == Calculator.getTotal() && this.id == i){
+    if(calcDisplay.innerHTML == Calculator.getTotal() && event.target.id == i){
       calcDisplay.innerHTML = null;
     }  
   }
@@ -54,20 +37,20 @@ function displayValue () {
   // Check if there are multiple math operations
   for (var x = 0; x < mathOps.length; x++){
     if (calcDisplay.innerHTML.includes(mathOps[x])){
-      if(this.id === ' + ' || this.id === ' - ' || this.id === ' x ' || this.id === ' / '){
+      if(event.target.id === ' + ' || event.target.id === ' - ' || event.target.id === ' x ' || event.target.id === ' / '){
         return;
       }
     }
   }
 
-  // Check if display is clear to enter values
+  // Check if display is clear (no error strings to user in display) to enter values
   if (calcDisplay.innerHTML === negativeDeposit || calcDisplay.innerHTML === negativeWithdrawal){
     calcDisplay.innerHTML = null;
     return;
   }
 
-    calcDisplay.innerHTML += this.id;
-    exp = calcDisplay.innerHTML;
+    calcDisplay.innerHTML += event.target.id;
+    exp = calcDisplay.innerHTML;  
 }
 
 
@@ -83,7 +66,6 @@ function eval () {
         (mathOp = mathOps[j].trim());
          a = Number(expArr[expArr.indexOf(mathOp)-1]);
          b = Number(expArr[expArr.indexOf(mathOp)+1]);
-         
       }
     }
   }
@@ -119,12 +101,11 @@ function withdraw () {
     }
 
     // Ensures positive funds
-    if (calcTotal < tempTotal){
+    if (calcTotal < 0){
       return calcDisplay.innerHTML = negativeWithdrawal;
     }
   Calculator.load(calcTotal);
-  calcDisplay.innerHTML = null;
-  console.log(Calculator.getTotal());
+  calcDisplay.innerHTML = null; 
 }
 
 
@@ -142,11 +123,11 @@ function deposit () {
     }
   Calculator.load(tempTotal);
   calcDisplay.innerHTML = null;
-  console.log(Calculator.getTotal());
 }  
 
 
-// Clears the display and memory when clicked
+// Clears ONLY the display if there is a value in display,
+// and clears both display and memory when clicked with no value in display
 clear.addEventListener('click', clearDisplay);
 function clearDisplay () {
 
@@ -163,7 +144,6 @@ function clearDisplay () {
 
 // Get balance
 getBalance.addEventListener('click', recallMem);
-
 function recallMem () {
   calcDisplay.innerHTML = Calculator.getTotal();
 }
@@ -173,3 +153,4 @@ function clearTotal () {
   Calculator.load(0);
   console.log(Calculator.getTotal());
 }
+
