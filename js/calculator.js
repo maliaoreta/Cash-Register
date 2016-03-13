@@ -22,8 +22,7 @@ function calculatorModule () {
   // Adds the passed in number to the current value in memory
   function add(a, b){
     if(typeof(a)==='number' && typeof(b)==='number'){
-    _total = a + b;
-    return _total;
+    return a+b;
     }
     else{
       throw error;
@@ -33,8 +32,7 @@ function calculatorModule () {
   // Subtracts passed in number from total
   function subtract(a, b){
     if(typeof(a)==='number' && typeof(b)==='number'){
-    _total = a - b;
-    return _total;
+    return a-b;
     }
     else{
       throw error;
@@ -44,8 +42,7 @@ function calculatorModule () {
   // Multiplies passed in number by total
   function multiply(a, b){
     if(typeof(a)==='number' && typeof(b)==='number'){
-    _total = a * b;
-    return _total;
+    return a*b;
     }
     else{
       throw error;
@@ -55,8 +52,7 @@ function calculatorModule () {
   // Divides total by number passed in
   function divides(a, b){
     if(typeof(a)==='number' && typeof(b)==='number'){
-    _total = a / b;
-    return _total;
+    return a/b;
     }
     else{
       throw error;
