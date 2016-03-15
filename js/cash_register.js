@@ -33,6 +33,7 @@ var cashRegister = function () {
       calcDisplay.innerHTML = null;
       return;
     } 
+
     calcDisplay.innerHTML += event.target.id;
   }
 
@@ -53,19 +54,19 @@ var cashRegister = function () {
 
     switch (mathOp) {
       case '+': 
-        calcDisplay.innerHTML = Calculator.add(a, b);
+        calcDisplay.innerHTML = Calculator.add(a, b).toFixed(2);
         break;
       case '-':
-        calcDisplay.innerHTML = Calculator.subtract(a, b);
+        calcDisplay.innerHTML = Calculator.subtract(a, b).toFixed(2);
         break;
       case '/':
         if (b === 0){
           return calcDisplay.innerHTML = 'Undefined!';
         }
-        calcDisplay.innerHTML = Calculator.divide(a, b);
+        calcDisplay.innerHTML = Calculator.divide(a, b).toFixed(2);
         break;
       case 'x':
-        calcDisplay.innerHTML = Calculator.multiply(a, b);
+        calcDisplay.innerHTML = Calculator.multiply(a, b).toFixed(2);
         break;
     }
   }
@@ -90,20 +91,22 @@ var cashRegister = function () {
 
   function deposit () {
 
-    tempTotal = Number(calcDisplay.innerHTML);
+      for (var i = 0; i < mathOps.length; i++){
+        if (calcDisplay.innerHTML.includes(mathOps[i])){
+          return calcDisplay.innerHTML = 'Invalid input!';
+        }
+      }
+
+
+      tempTotal = Number(calcDisplay.innerHTML);
       if (Calculator.getTotal()){
         tempTotal += Calculator.getTotal();
       }
 
-      if (tempTotal < 0){
+      else if (tempTotal < 0){
         return calcDisplay.innerHTML = 'Can\'t deposit a negative amount!';
       }
-      else if (typeof tempTotal === NaN){
-        console.log('tempTotal', tempTotal);
-        return calcDisplay.innerHTML = "Please enter a number!";
-      }
       else if (typeof tempTotal === 'number'){
-        console.log('tempTotal', tempTotal);
         Calculator.load(tempTotal);
         calcDisplay.innerHTML = null;
       }
@@ -141,48 +144,49 @@ var cashRegister = function () {
   };
 }
 
-  var calcDisplay = document.getElementById('calcDisplay');
-    calcDisplay.style.resize = 'none';
 
-  // Attach click event listener and displayValue func for all buttons that need their value displayed
-  var btnsToDisplay = document.getElementsByClassName('buttons');
-    btnsToDisplay[0].addEventListener('click', function () {
-    
-      cashRegister().displayValue();
-    });
+var calcDisplay = document.getElementById('calcDisplay');
+  calcDisplay.style.resize = 'none';
+
+// Attach click event listener and displayValue func for all buttons that need their value displayed
+var btnsToDisplay = document.getElementsByClassName('buttons');
+  btnsToDisplay[0].addEventListener('click', function () {
   
-  // // Clears ONLY the display if there is a value in display,
-  // // and clears both display and memory when clicked with no value in display
-  var clear = document.getElementById('Clear');
-  clear.addEventListener('click', function () {
-    
-    cashRegister().clearDisplay();
+    cashRegister().displayValue();
   });
 
-  // Evaluate the expression in display when user clicks the = button
-  var equals = document.getElementById('=');
-  equals.addEventListener('click', function () {
+// // Clears ONLY the display if there is a value in display,
+// // and clears both display and memory when clicked with no value in display
+var clear = document.getElementById('Clear');
+clear.addEventListener('click', function () {
+  
+  cashRegister().clearDisplay();
+});
 
-    cashRegister().evaluate();
-  });
+// Evaluate the expression in display when user clicks the = button
+var equals = document.getElementById('=');
+equals.addEventListener('click', function () {
 
-  // Get Balance
-  var getBalance = document.getElementById('Get Balance');
-  getBalance.addEventListener('click', function () {
+  cashRegister().evaluate();
+});
 
-    cashRegister().recallMem();
-  });
+// Get Balance
+var getBalance = document.getElementById('Get Balance');
+getBalance.addEventListener('click', function () {
 
-  // Adds value in display into cash register (memory) when Deposit Cash is clicked, clears display
-  var depositCash = document.getElementById('Deposit Cash');
-  depositCash.addEventListener('click', function () {
+  cashRegister().recallMem();
+});
 
-    cashRegister().deposit();
-  });
+// Adds value in display into cash register (memory) when Deposit Cash is clicked, clears display
+var depositCash = document.getElementById('Deposit Cash');
+depositCash.addEventListener('click', function () {
 
-  // Withdraw Cash
-  var withdrawCash = document.getElementById('Withdraw Cash');
-  withdrawCash.addEventListener('click', function () {
+  cashRegister().deposit();
+});
 
-    cashRegister().withdraw();
-  });
+// Withdraw Cash
+var withdrawCash = document.getElementById('Withdraw Cash');
+withdrawCash.addEventListener('click', function () {
+
+  cashRegister().withdraw();
+});
