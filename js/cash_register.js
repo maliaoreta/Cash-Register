@@ -32,12 +32,9 @@ var cashRegister = function () {
     if (calcDisplay.innerHTML === negativeDeposit || calcDisplay.innerHTML === negativeWithdrawal){
       calcDisplay.innerHTML = null;
       return;
-    }
-      
+    } 
     calcDisplay.innerHTML += event.target.id;
   }
-
-
 
   function evaluate () {
 
@@ -73,7 +70,6 @@ var cashRegister = function () {
     }
   }
 
-
   function withdraw () {
     tempTotal = Number(calcDisplay.innerHTML);
       if (Calculator.getTotal()) {
@@ -91,8 +87,6 @@ var cashRegister = function () {
     Calculator.load(calcTotal);
     calcDisplay.innerHTML = null; 
   }
-
-
 
   function deposit () {
 
@@ -136,7 +130,6 @@ var cashRegister = function () {
     Calculator.load(0);
   }
 
-
   return {
     displayValue : displayValue,
     evaluate : evaluate, 
@@ -146,9 +139,6 @@ var cashRegister = function () {
     recallMem : recallMem,
     clearTotal : clearTotal
   };
-
-
-
 }
 
   var calcDisplay = document.getElementById('calcDisplay');
