@@ -1,4 +1,3 @@
-
 var Calculator = calculatorModule();
 var cashRegister = function () {
 
@@ -13,7 +12,6 @@ var cashRegister = function () {
   // Updates the display to show clicked values
   function displayValue () {
     
-
     // Check if user is modifying previously displayed num that was stored in total
     if(calcDisplay.innerHTML === Number(Calculator.getTotal())){
       calcDisplay.innerHTML = null;
@@ -96,7 +94,6 @@ var cashRegister = function () {
           return calcDisplay.innerHTML = 'Invalid input!';
         }
       }
-
 
       tempTotal = Number(calcDisplay.innerHTML);
       if (Calculator.getTotal()){
